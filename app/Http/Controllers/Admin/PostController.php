@@ -51,12 +51,14 @@ class PostController extends Controller
          $request->validate([
             'title' => 'required|max:250',
             'content' => 'required|min:5',
+            'category' => 'exists:categories,id'
         ],
         [
             'title.required' =>'Titolo deve essere valorizzato.',
             'title.max' =>'Hai superato i 250 caratteri.',
             'content.required' => 'Il contenuto deve essere compilato.',
-            'content.min' => 'Minimo 5 caratteri.'
+            'content.min' => 'Minimo 5 caratteri.',
+            'category_id.exists' => 'La categoria selezionata non esiste'
             //modifichiamo il messaggio di errore standard
         ]);
         //validazione dati
@@ -109,8 +111,9 @@ class PostController extends Controller
         if(!$post){
             abort(404);
         }
+        $category = Category::find($post->category_id);
         //al post del findOrFail per provare
-        return view('admin.posts.show', compact('post'));
+        return view('admin.posts.show', compact('post', 'category'));
     }
 
     /**
@@ -123,8 +126,8 @@ class PostController extends Controller
     {
         //
         $post = Post::findOrFail($id);
-
-        return view('admin.posts.edit', compact('post'));
+        $categories = Category::all();
+        return view('admin.posts.edit', compact('post', 'categories'));
     }
 
 
@@ -143,14 +146,16 @@ class PostController extends Controller
         $request->validate([
             'title' => 'required|max:250',
             'content' => 'required|min:5',
+            'category' => 'required|exists:categories,id'
         ],
         [
-            'title.required' =>'Titolo deve essere valorizzato',
-            'title.max' =>'Hai superato i 250 caratteri',
-            'content.min' => 'Minimo 5 caratteri'
+            'title.required' =>'Titolo deve essere valorizzato.',
+            'title.max' =>'Hai superato i 250 caratteri.',
+            'content.required' => 'Il contenuto deve essere compilato.',
+            'content.min' => 'Il contenuto deve essere minimo di 5 caratteri.',
+            'category_id.exists' => 'La categoria selezionata non esiste'
             //modifichiamo il messaggio di errore standard
         ]);
-        //validazione dati
 
         // $post = Post::findOrFail($id);
         $postData = $request->all();
