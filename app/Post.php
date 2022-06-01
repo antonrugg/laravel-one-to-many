@@ -9,7 +9,11 @@ class Post extends Model
 {
     //
     protected $table = 'posts';
-    protected $fillable = ['title', 'content', 'slug'];
+    protected $fillable = ['title', 'content', 'slug', 'category_id'];
+
+    public function category(){
+        return $this->belongstTo('App\Category');
+    }
 
     //take a string as input and return a unique slug version
     public static function convertToSlug($title){
@@ -27,4 +31,6 @@ class Post extends Model
 
         return $slug;
     }
+
+
 }
