@@ -17,7 +17,7 @@ use Illuminate\Support\Facades\Route;
 //     return view('welcome');
 // });
 
-Auth::routes(['register' => false, 'reset' => false, 'verify' => false]);
+Auth::routes(['register' => true, 'reset' => true, 'verify' => true]);
 //passiamo un array per bloccare le routes quando abbiamo gia' un admin registrato
 //in questo modo nessuno potra' registrarsi come admin a parte noi
 

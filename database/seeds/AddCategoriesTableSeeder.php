@@ -6,7 +6,7 @@ use Illuminate\Support\Str;
 
 
 
-class CategoriesTableSeeder extends Seeder
+class AddCategoriesTableSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -16,7 +16,7 @@ class CategoriesTableSeeder extends Seeder
     public function run()
     {
         //
-        $categories = ['Series', 'Hollywood', 'Tv', 'Theatre', 'Gossip'];
+        $categories = ['Comics', 'Horror'];
 
         foreach($categories as $category){
             $new_category_object = new Category();
